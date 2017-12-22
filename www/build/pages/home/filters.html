@@ -1,0 +1,52 @@
+<!-- <ion-navbar *navbar>
+  <ion-title>Filters</ion-title>
+    <button small outline secondary (click)="dismiss(false)">
+      <span secondary showWhen="ios">Close</span>
+      <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+    </button>
+</ion-navbar> -->
+<ion-navbar *navbar >
+  <button small clear secondary (click)="dismiss(false)">
+    <span secondary showWhen="ios">Close</span>
+    <ion-icon name="arrow-back" showWhen="android,windows"></ion-icon>
+  </button>
+  <!-- <ion-title>
+    Filters
+  </ion-title> -->
+</ion-navbar>
+<ion-content class="filters">
+  <ion-list>
+    <ion-list-header>Filters</ion-list-header>
+    <ion-item>
+      <ion-label>Sort By:</ion-label>
+      <ion-select [(ngModel)]="_filters.sort" multiple="false" cancelText="Cancel" okText="Sort">
+        <ion-option value="date"> Date</ion-option>
+        <ion-option value="distance"> Distance</ion-option>
+        <!-- <ion-option value="deals"> Top Deals</ion-option> -->
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Show events till </ion-label>
+      <ion-select [(ngModel)]="_filters.forDays" multiple="false" cancelText="Cancel" okText="OK">
+        <ion-option value="1">tommorow</ion-option>
+        <ion-option value="2"> next 2 days</ion-option>
+        <ion-option value="7"> next 7 days</ion-option>
+        <ion-option value="15"> next 15 days</ion-option>
+        <ion-option value="30"> next 1 month</ion-option>
+        <ion-option value="90"> next 3 months</ion-option>
+        <ion-option value="180"> next 6 months</ion-option>
+        <ion-option value="270"> next 9 months</ion-option>
+        <ion-option value="365"> next 1 year</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>In Category</ion-label>
+      <ion-select [(ngModel)]="_filters.categories" (ngModelChange)="selectCat($event)" multiple="true" cancelText="Cancel" okText="OK">
+        <ion-option value="0">-All-</ion-option>
+        <ion-option  *ngFor="let c of _categories" value="{{c._id}}">{{c.name}}</ion-option>
+
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <button fab fab-bottom fab-right secondary large (click)="dismiss(true)"><ion-icon name="ios-checkmark-outline"></ion-icon></button>
+</ion-content>

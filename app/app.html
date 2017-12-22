@@ -1,0 +1,17 @@
+<ion-menu [content]="mainMenu">
+  <ion-content>
+    <img src="menutop.png">
+
+    <button class="fab-img" fab fab-left (click)="pushPage('account')">
+      <ion-icon name="ios-person" ></ion-icon>
+    </button>
+    <ion-label class="fab-img-text" secondary> Account</ion-label>
+    <ion-list class="menu">
+      <ion-item (click)="pushPage('settings')"><ion-icon name="ios-settings-outline" item-right></ion-icon>Settings</ion-item>
+      <ion-item (click)="pushPage('invite')"><ion-icon name="ios-add-outline" item-right></ion-icon>Invite Friends</ion-item>
+      <ion-item (click)="pushPage('help')">  <ion-icon name="ios-help-circle-outline" item-right></ion-icon>Help</ion-item>
+      <ion-item (click)="pushPage('about')"> <ion-icon name="ios-information-circle-outline" item-right></ion-icon>About</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #mainMenu [root]="rootPage"></ion-nav>

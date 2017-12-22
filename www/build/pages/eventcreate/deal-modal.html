@@ -1,0 +1,48 @@
+
+<ion-navbar *navbar >
+  <button small clear secondary (click)="dismiss()">
+    <span secondary showWhen="ios">Close</span>
+    <ion-icon name="arrow-back" showWhen="android,windows"></ion-icon>
+  </button>
+
+  <button secondary style="float: right;" (click)="applyDeals()">
+    Apply
+  </button>
+  <button secondary style="float: right;" (click)="addDeal()">
+    {{switchTxt}}
+  </button>
+</ion-navbar>
+
+<ion-content *ngIf="(addnew)==0">
+  <ion-list>
+      <ion-list-header style="background-color: #cf9139;color: #ffffff;">{{actionType}} Deal
+      </ion-list-header>
+       <ion-item *ngFor="let item of availableDeals">
+            <ion-label>
+              <h2 secondary>{{item.name}}</h2>
+              <h3>Type: {{item.type}}</h3>
+              <p>{{item.description}}</p>
+            </ion-label>
+            <ion-toggle (ionChange)="changeBool('DEAL_CHANGED',$event,item)"  checked="{{item.enabled}}" item-right></ion-toggle>
+       </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-content *ngIf="(addnew)==1">
+  <ion-list>
+      <ion-list-header style="background-color: #cf9139;color: #ffffff;">Create Deal
+      </ion-list-header>
+      <ion-item>
+        <ion-label secondary floating>Name</ion-label>
+        <ion-input type="text" [(ngModel)]='deal.name' value='{{deal.name}}'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label secondary floating>Description  ({{(140)-(deal.description.length)}})</ion-label>
+        <ion-textarea rows="5" cols="50" maxlength="140" [(ngModel)]="deal.description" value='{{deal.description}}'>
+        </ion-textarea>
+      </ion-item>
+
+
+
+  </ion-list>
+</ion-content>

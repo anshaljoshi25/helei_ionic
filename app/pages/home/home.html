@@ -1,0 +1,92 @@
+<ion-navbar *navbar  secondary >
+   <!-- <ion-buttons start > -->
+     <button menuToggle>
+       <ion-icon name="menu"></ion-icon>
+     </button>
+   <!-- </ion-buttons> -->
+
+  <ion-title >
+    helei
+  </ion-title>
+
+  <ion-buttons end>
+    <button *ngIf="_ios" light clear (click)="pushPage('create',{type:'new'})" >
+      <ion-icon name="ios-add-outline"></ion-icon>
+    </button>
+    <button (click)="refresh()"  class="home-header-ref-icon">
+      <ion-icon name="ios-refresh-outline"></ion-icon>
+    </button>
+    <button (click)="pushPage('search')" >
+      <ion-icon name="ios-search-outline"></ion-icon>
+    </button>
+  </ion-buttons>
+
+</ion-navbar>
+
+<ion-content class="home card-background-page">
+  <button *ngIf="!_ios" class="create-event" secondary fab fab-bottom fab-right fab-fixed (click)="pushPage('create',{type:'new'})" >
+    <ion-icon name="ios-add-outline"><h4>Event</h4></ion-icon>
+  </button>
+  <ion-header>
+      <ion-item>
+        <ion-label>Events near</ion-label>
+        <!-- <ion-input [(ngModel)]='locationTxt' (input)="searchPlace($event)" (click)="inputClear()" placeholder="Enter Place/Location" clearInput></ion-input> -->
+        <ion-input id="location" name="location" type=”text” placeholder="Enter Place/Location" [(ngModel)]="locationInput" clearInput></ion-input>
+        <button (click)="fetchCurrentLoc()" clear small outline secondary item-right><ion-icon name="locate"></ion-icon></button>
+        <button (click)="showFilters()" small outline secondary item-right><ion-icon name="options"></ion-icon></button>
+      </ion-item>
+      <ion-list class="homeDropDown">
+        <ion-item *ngFor="let place of listPlaces" >
+          <h2 (click)="selectPlace(place)">{{ place.name }}</h2>
+        </ion-item>
+      </ion-list>
+  </ion-header>
+ <!-- <ion-list> -->
+   <ion-card *ngFor="let e of _events">
+      <img (click)="showEvent(e)" src="{{_config.SERVER_URI+'/'+(e.eventDisplayPic=='' ? 'modules/events/client/img/upload/helei_256x256.jpg' : e.eventDisplayPic+'_256x256')}}" />
+      <div class="card-title" >
+        <a clear large light  (click)="showEvent(e)">{{e.name}}</a>
+        <ion-icon class="card-header-icon" (click)="shareOptions(e)"  name="md-share"></ion-icon>
+      </div>
+
+      <div class="deal-box" *ngIf="e.deals!=undefined && e.deals!=null && e.deals!=''">
+        <img src="deal.png"  class="deal"  />
+        <!-- 50% off on Beer! 1+1 till noon #medalla -->
+        {{e.deals[0].description}}
+      </div>
+      <div class="hashes">
+        <ion-badge secondary ># {{e.category.name}}</ion-badge>
+        <ion-badge secondary *ngFor="let i of e.categories"># {{i.name}}</ion-badge>
+      </div>
+      <ion-card-footer>
+        <ion-row no-padding>
+        <ion-col>
+          <button (click)="love(e)" small secondary clear>
+            <ion-icon name="heart" *ngIf="isLoved(e)"></ion-icon>
+            <ion-icon name="heart-outline" *ngIf="!isLoved(e)"></ion-icon>
+            <div>{{e.lovedBy==undefined?0:e.lovedBy.length}}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button (click)="showAttending(e)" small secondary clear>
+            <ion-icon name="ios-people-outline"></ion-icon>
+            <div>{{e.going.length}}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button small secondary clear (click)="showMap(e)">
+            <ion-icon name="ios-navigate-outline"></ion-icon>
+            <div>{{parse2Int(e.distance*0.00062137)}}mi</div>
+          </button>
+        </ion-col>
+      </ion-row>
+      </ion-card-footer>
+    </ion-card>
+
+ <!-- </ion-list> -->
+
+ <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+
+</ion-content>

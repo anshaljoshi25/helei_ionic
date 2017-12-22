@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Attending
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+     <ion-item-group>
+        <ion-item-divider light>Created Events</ion-item-divider>
+        <ion-item *ngFor="let e of createdEvents" >
+          <ion-thumbnail item-left (click)="showEvent(e)">
+            <img src="{{_config.SERVER_URI+'/'+(e.eventDisplayPic=='' ? 'modules/events/client/img/upload/helei_256x256.jpg' : e.eventDisplayPic+'_128x128')}}" style="height: 100%;" />
+          </ion-thumbnail>
+          <h2 (click)="showEvent(e)">{{e.name}}</h2>
+          <p (click)="showEvent(e)">{{e.description}}</p>
+
+          <button small secondary clear (click)="editEvent(e)">
+            <ion-icon name="ios-create-outline"></ion-icon>
+            <div>Edit</div>
+          </button>
+
+          <!-- <button small secondary clear  (click)="invite(e)">
+            <ion-icon name="ios-person-add-outline"></ion-icon>
+            <div>Invite</div>
+          </button> -->
+          <button small secondary clear (click)="showEvent(e)">
+            <ion-icon name="ios-eye-outline"></ion-icon>
+            <div>View</div>
+          </button>
+        </ion-item>
+      </ion-item-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-item-group>
+       <ion-item-divider light>Subscribed Events</ion-item-divider>
+       <ion-item *ngFor="let e of subscribedEvents" >
+         <ion-thumbnail item-left (click)="showEvent(e)">
+           <img src="{{_config.SERVER_URI+'/'+(e.eventDisplayPic=='' ? 'modules/events/client/img/upload/helei_256x256.jpg' : e.eventDisplayPic+'_128x128')}}" style="height: 100%;" />
+         </ion-thumbnail>
+         <h2 (click)="showEvent(e)">{{e.name}}</h2>
+         <p (click)="showEvent(e)">{{e.description}}</p>
+
+         <button small secondary clear item-right (click)="showEvent(e)">
+           <ion-icon name="ios-eye-outline"></ion-icon>
+           <div>View</div>
+         </button>
+        </ion-item>
+     </ion-item-group>
+  </ion-list>
+</ion-content>

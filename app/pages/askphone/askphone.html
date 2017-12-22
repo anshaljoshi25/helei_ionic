@@ -1,0 +1,18 @@
+<ion-content padding class="askphone">
+  <p>Please provide following details:</p>
+  <ion-item>
+    <ion-label floating>Phone Number
+  </ion-label>
+    <ion-input type="tel" [(ngModel)]="phone" large></ion-input>
+
+  </ion-item>
+  <p padding>Enter phone number with country code [ex. 17870000000] and without any special characters</p>
+  <ion-item>
+    <ion-label floating>Name</ion-label>
+    <ion-input type="text" [(ngModel)]="name" large></ion-input>
+
+  </ion-item>
+  <p padding>Name should be space separated</p>
+  <button padding block large light (click)="login(phone,name)">Enter</button>
+  <button padding block large light *ngIf="resend" (click)="resendCode()">Resend Code</button>
+</ion-content>

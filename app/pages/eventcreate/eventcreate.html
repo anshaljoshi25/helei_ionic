@@ -1,0 +1,189 @@
+<ion-navbar *navbar secondary>
+  <ion-title >
+    {{event.type}} Event
+  </ion-title>
+</ion-navbar>
+
+<ion-content *ngIf="(tabCurrent)==1" >
+  <ion-card class="tab-cam-img">
+    <ion-img [src]="originalImage" *ngIf="originalImage" (click)="usePrevImage()" alt='hh'></ion-img>
+    <div class="tab-cam-img-text" (click)="usePrevImage()" *ngIf="cropedImage || event.type==='edit'">
+      Next
+    </div>
+  </ion-card>
+</ion-content>
+
+<ion-content  *ngIf="(tabCurrent)==2" class="create-tab2">
+  <ion-header>
+        <h5 secondary *ngIf="(camUsed)===false">Crop Image (Take/Upload new Image to crop)</h5>
+        <h5 secondary *ngIf="cropedImage && camUsed">Crop Image (Click Image to crop)</h5>
+  </ion-header>
+
+  <ion-card class="tab-crop">
+      <ion-img (click)="cropImage()" [src]="cropedImage" *ngIf="cropedImage"   alt='hh'></ion-img>
+      <!-- <div class="tab-crop-img-text" (click)="cropImage()" *ngIf="cropedImage && camUsed">
+        Click Image to crop
+      </div> -->
+  </ion-card>
+
+  <ion-list >
+    <h5 secondary *ngIf="(selectedCategories.length>0)===true">Selected Categories</h5>
+    <ion-badge *ngFor="let scat of selectedCategories"  secondary (click)="removeSelCategory(scat)" >
+      {{ scat.name }}
+      <ion-icon name="remove-circle"></ion-icon>
+    </ion-badge>
+  </ion-list>
+  <h5 secondary>Choose Categories</h5>
+  <ion-searchbar secondary
+    placeholder='Search Category'
+    type='text'
+    [(ngModel)]='searchInput1'
+    (input)="searchCategory($event)"
+    (ionCancel)="onCatSearchCancel($event)">
+  </ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let cat of scategories">
+      <ion-thumbnail item-left  class="cat-image" >
+        <img src="{{config.SERVER_URI+cat.imgURL.substr(1)}}" />
+      </ion-thumbnail>
+      <h2>{{ cat.name }}</h2>
+      <p>#oneliner #hashTag</p>
+      <button (click)="selectCategory(cat)"  item-right secondary>Select</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-content  *ngIf="(tabCurrent)==3">
+  <ion-header>
+        <h5 secondary>Details </h5>
+      <!-- </ion-item> -->
+  </ion-header>
+
+  <ion-item>
+    <ion-label secondary floating>Name</ion-label>
+    <ion-input type="text" [(ngModel)]='event.name' value='{{event.name}}'></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label secondary floating>Description</ion-label>
+    <ion-textarea rows="4" cols="50" [(ngModel)]="event.description" value='{{event.description}}'>
+
+    </ion-textarea>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label secondary>Repeat</ion-label>
+    <ion-checkbox secondary  disabled="false"  [(ngModel)]='event.repeat' value='{{event.repeat}}'></ion-checkbox>
+  </ion-item> -->
+
+  <ion-item>
+    <ion-label secondary>Start Date & Time</ion-label>
+    <!-- <ion-input type="date"  [(ngModel)]='event.eventStartDate' value='{{event.eventStartDate}}'></ion-input> -->
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" pickerFormat="MMM DD, YYYY HH:mm" min="{{minStartDate}}" max="{{maxStartDate}}" [(ngModel)]='event.eventStartDate' value='{{event.eventStartDate}}'>
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label secondary>End Date & Time</ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" pickerFormat="MMM DD, YYYY HH:mm" min="{{minEndDate}}" max="{{maxEndDate}}" [(ngModel)]='event.eventEndDate' value='{{event.eventEndDate}}'>
+    </ion-datetime>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label secondary>Public Event</ion-label>
+    <ion-checkbox secondary  disabled="false"  [(ngModel)]='event.public' value='{{event.public}}'></ion-checkbox>
+  </ion-item> -->
+</ion-content>
+
+<ion-content *ngIf="(tabCurrent)==4">
+  <ion-title>
+    <h5   secondary>Location on map</h5>
+  </ion-title>
+  <div id="map-canvas"></div>
+
+  <ion-item>
+    <h5 secondary >Or</h5>
+    <ion-searchbar secondary
+    placeholder='Search Place'
+    type='text'
+    [(ngModel)]='searchInput2'
+    (input)="searchPlace($event)">
+     </ion-searchbar>
+   </ion-item>
+   <ion-list>
+     <ion-item *ngFor="let place of listPlaces" >
+       <h2 (click)="selectPlace(place)">{{ place.name }}</h2>
+     </ion-item>
+   </ion-list>
+
+   <!-- <ion-item> -->
+     <button secondary medium  (click)="attachEventDeal('Attach')">
+      <ion-icon  name="ios-pricetag-outline"></ion-icon>
+      Click here to manage deals
+      <!-- {{(event.deals.length) > 0?'Click Here to Change Deal ':'Click Here to Attach Deal '}} -->
+    </button>
+
+
+   <ion-item class="wrap-text">
+     <ion-label secondary >* Submitting the event means that you agree to our disclaimers!</ion-label>
+   </ion-item>
+   <button fab secondary fab-right large (click)="currentLoc()" class="map-curr-loc"  [disabled]="clickedSubmit">
+     <ion-icon name="ios-locate-outline">
+     </ion-icon>
+   </button>
+</ion-content>
+
+<!-- <ion-content  *ngIf="(tabCurrent)==5">
+  <h5 secondary>Invite Contacts</h5>
+  <ion-item>
+    <ion-label secondary floating>Message</ion-label>
+    <ion-textarea rows="4" cols="100" [(ngModel)]='message'>
+    </ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label secondary>Invite All</ion-label>
+    <ion-checkbox secondary  disabled="false" [(ngModel)]='event.inviteall'></ion-checkbox>
+  </ion-item>
+
+   <ion-item>
+     <h5 secondary >Or</h5>
+     <ion-searchbar secondary>
+      </ion-searchbar>
+    </ion-item>
+</ion-content> -->
+
+<ion-toolbar  position="bottom" >
+  <ion-row>
+    <ion-col >
+      <button block  secondary clear (click)="openGallery()"  *ngIf="(tabCurrent)==1">
+        <ion-icon name="ios-images-outline"></ion-icon>
+        Upload
+      </button>
+      <!-- prevTab -->
+      <button block  secondary clear (click)="prevTab()" *ngIf="(tabCurrent)>1 && (tabCurrent)<=4">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+        Back
+      </button>
+    </ion-col>
+
+    <ion-col *ngIf="(tabCurrent)!=4">
+      <button block  secondary clear (click)="takePicture()" *ngIf="(tabCurrent)==1">
+        <ion-icon name="ios-camera-outline"></ion-icon>
+        Capture
+      </button>
+
+      <button block  secondary  clear (click)="nextTab()" *ngIf="(tabCurrent)>1 && (tabCurrent)<=3">
+        Next
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-col>
+
+    <ion-col *ngIf="(tabCurrent)==4">
+      <button block  secondary  clear (click)="nextTab()" [disabled]="clickedSubmit">
+        Submit
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-toolbar>

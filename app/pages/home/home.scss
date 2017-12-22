@@ -1,0 +1,134 @@
+.home {
+
+}
+
+.card-background-page {
+
+    button.create-event {
+      z-index:2;
+      margin-right: -30px;
+      padding-right: 13px;
+      border-radius: 0;
+      width: 65px;
+      opacity: 0.7;
+
+      ion-icon {
+        margin-top: 10px;
+      }
+
+      h4 {
+        margin-top: 0px;
+        font-size: 16px;
+      }
+    }
+
+    ion-card {
+        position:relative;
+        text-align: left;
+        margin-bottom: 15px;
+        border-radius: 0px;
+
+        img {
+            height: 262px;
+        }
+        img.deal {
+          position: absolute;
+          top: 0px;
+          right: 0;
+          width: 70px;
+          height: 30px;
+        }
+        .deal-box {
+          padding: 25px 15px 15px;
+          color: white;
+          position: absolute;
+          bottom: 90px;
+          background-color: rgba(0, 0, 0, 0.4);
+          font-size: 14px;
+          width: 100%;
+          border-bottom: 1px rgba(255,255,255,0.2) solid;
+          border-top: 1px rgba(255,255,255,0.2) solid;
+        }
+
+        .hashes {
+          position: absolute;
+          left: 10px;
+          margin-top: -38px;
+
+          ion-badge {
+            margin: 5px ;
+          }
+        }
+
+        ion-col {
+          text-align: center;
+        }
+
+    }
+
+    ion-header {
+      // position: fixed;
+      // z-index: 1;
+      // width:100%;
+      ion-label{
+        font-size:12px;
+      }
+      ion-select {
+        width:100%;
+      }
+    }
+
+    ion-list {
+      // margin-top: 50px;
+    }
+
+    .card-title {
+        position: absolute;
+        top:0%;
+        font-size:1.5rem;
+        width:100%;
+        color:white;
+        text-shadow: 1px 1px 5px black;
+        background: rgba(0,0,0,0.5);
+        padding: 15px 10px;
+    }
+
+    .card-subtitle {
+       font-size: 1.0em;
+       position:absolute;
+       top:52%;
+       width:100%;
+       color:white;
+    }
+}
+
+.filters {
+  ion-list-header {
+    background-color:#cf9139;
+    color:white;
+  }
+
+  ion-navbar {
+    ion-title {
+      padding-top:6px;
+    }
+    button {
+      float:left;
+    }
+  }
+}
+
+ion-list.homeDropDown{
+  position: absolute;
+    z-index: 100;
+    width: 100%;
+}
+
+.card-header-icon{
+  float: right;
+}
+.home-header-ref-icon{
+  ion-icon{
+    font-size: 2.2em;
+  }
+}

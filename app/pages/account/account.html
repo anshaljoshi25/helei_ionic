@@ -1,0 +1,14 @@
+<ion-navbar hideBackButton secondary *navbar>
+
+  <ion-buttons (click)="goBackHome()" style="float:left;">
+    <button >
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </button>
+  </ion-buttons>
+    <ion-title style="margin-top: 7px;">Account</ion-title>
+
+</ion-navbar>
+  <ion-tabs>
+    <ion-tab [root]="tab1Root" tabTitle="Attending" tabIcon="home"></ion-tab>
+    <ion-tab [root]="tab2Root"  tabTitle="Profile" tabIcon="ios-person-outline"></ion-tab>
+  </ion-tabs>

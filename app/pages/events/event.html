@@ -1,0 +1,143 @@
+<ion-navbar *navbar secondary>
+  <ion-title >{{_ev.name==undefined?'':_ev.name}}</ion-title>
+<ion-buttons end>
+    <button class="share-btn"  (click)="shareOptions(_ev)"  clear >
+    <ion-icon name="md-share"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content class="eventPage">
+<!-- <button (click)="pushPage('invite')" class="invitePerson" fab fab-right fab-bottom fab-fixed><ion-icon name="ios-person-add-outline"><br/>Invite</ion-icon></button> -->
+  <!-- <img src="https://www.clubtexting.com/img/solutions/sms-for-events-promoters.jpg"/> -->
+  <ion-slides #mySlider class="event-bg" [options]="mySlideOptions">
+    <ion-slide>
+      <img  src="{{_config.SERVER_URI+'/'+_ev.eventDisplayPic}}" />
+    </ion-slide>
+    <ion-slide *ngFor="let img of _ev.images">
+      <!-- {{img.imgURL}} -->
+    <img  src="{{_config.SERVER_URI+'/'+img.imgURL}}" />
+  </ion-slide>
+</ion-slides>
+<ion-toolbar  >
+  <ion-row>
+    <ion-col>
+    <button block class="invitePerson"(click)="pushPage('invite')" secondary small outline>
+      <ion-icon name="ios-person-add-outline" ></ion-icon>invite
+    </button>
+    <!-- <a clear small secondary class="event-row-1-a">
+    <ion-icon name='ios-arrow-down-outline'></ion-icon>
+    23 Comments
+  </a> -->
+</ion-col>
+<ion-col>
+  <button block class="attendOutline" (click)="attendEvent(_ev)" secondary small outline>
+    <ion-icon class="subscribeIcon" *ngIf="!isAttended(_ev)" name="ios-checkmark-circle-outline"></ion-icon>
+    <ion-icon class="subscribeIcon"  *ngIf="isAttended(_ev)" name="checkmark-circle" style="color=#cf9139"></ion-icon>
+    {{isAttended(_ev)===true?'Unattend':'Attend'}}
+  </button>
+</ion-col>
+<ion-col *ngIf="(_ev.creator!=undefined && _ev.creator!=null && _ev.creator!='')?((_config.USER_ID===_ev.creator._id) || (_config.USER_ID===_ev.creator)):false">
+  <button block  class="ev-edit-btn" (click)="pushPage('edit')"   secondary small outline>
+    <ion-icon name="ios-create-outline"></ion-icon>
+    EDIT
+  </button>
+</ion-col>
+</ion-row>
+</ion-toolbar>
+
+<ion-list class="deal" *ngIf="_ev.deals!=undefined && _ev.deals.length">
+  <ion-item-sliding >
+    <ion-item >
+      <!-- {{_ev.deals[0].description}} -->
+      <p class="wrap">{{_ev.deals[0].description}}</p>
+      <!-- <ion-icon item-right name="arrow-round-back"></ion-icon> -->
+    </ion-item>
+    <!-- <ion-item-options side="left">
+      <button primary small>
+        <ion-icon name="cart"></ion-icon>Buy
+      </button>
+      <button primary small>
+        <ion-icon name="thumbs-up"></ion-icon>Like
+      </button>
+    </ion-item-options> -->
+  </ion-item-sliding >
+
+  <!-- <ion-item-sliding side="right">
+    <ion-item >
+      <p class="wrap">1 + 1 Beer + free peanuts.</p>
+    </ion-item>
+    <ion-item-options>
+      <button primary >
+      Buy
+      </button>
+    </ion-item-options>
+  </ion-item-sliding> -->
+</ion-list>
+
+
+<p  class="event-name-heading">
+  <span>{{_ev.name!=undefined?_ev.name:''}}</span><br/>
+  <ion-badge *ngFor="let c of _ev.categories">#{{c.name}} </ion-badge>
+</p>
+
+<ion-list>
+  <!-- <ion-item>
+  <h3></h3>
+</ion-item> -->
+<ion-item class="table-title-text">
+  Starts
+  <ion-icon item-right class="table-content">
+    {{getFormattedDate(_ev.eventStartDate) | date:'dd MMM yyyy'}} @ {{getFormattedDate(_ev.eventStartDate) | date:'hh:mm p'}}
+  </ion-icon>
+</ion-item>
+<ion-item class="table-title-text">
+  Ends
+  <ion-icon item-right class="table-content">
+    {{getFormattedDate(_ev.eventEndDate) | date:'dd MMM yyyy'}} @ {{getFormattedDate(_ev.eventEndDate) | date:'hh:mm p'}}
+  </ion-icon>
+</ion-item>
+<ion-item class="table-title-text">
+  Venue
+  <ion-icon item-right class="table-content">
+    {{(_ev.venueName!=undefined )?_ev.venueName:'not provided' }}
+  </ion-icon>
+</ion-item>
+<ion-item >
+  Place
+  <ion-icon item-right >
+    {{(_ev.place!=undefined && _ev.place.address_component!=undefined && _ev.place.address_component.length>0)?_ev.place.address_components[0].long_name:(_ev.place.name==undefined?'not provided':_ev.place.name) }}
+  </ion-icon>
+</ion-item>
+
+</ion-list>
+<p  padding >{{_ev.description!=undefined?_ev.description:''}}</p>
+
+<ion-card-content>
+</ion-card-content>
+
+
+<ion-toolbar class="floating-toolbar" >
+  <ion-row>
+    <ion-col>
+      <button block  light clear (click)="love(_ev)" >
+        <ion-icon name="heart" *ngIf="isLoved(_ev)"></ion-icon>
+        <ion-icon name="heart-outline" *ngIf="!isLoved(_ev)"></ion-icon>
+        {{_ev.lovedBy==undefined?0:_ev.lovedBy.length}}
+      </button>
+    </ion-col>
+    <ion-col>
+      <button (click)="showAttending(_ev)" block  light clear>
+        <ion-icon name="ios-people-outline"></ion-icon>
+        {{_ev.going.length}}
+      </button>
+    </ion-col>
+    <ion-col>
+      <button block  light clear (click)="showMap(_ev)">
+        <ion-icon name="ios-navigate-outline"></ion-icon>
+        {{_ev.distance==undefined?'0mi':parse2Int(_ev.distance*0.00062137)+'mi'}}
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-toolbar><br/><br/><br/>
+</ion-content>

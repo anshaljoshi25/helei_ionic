@@ -1,0 +1,77 @@
+.tab-cam-img{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height:100%;
+
+    background: rgba(207, 145, 57, 0.1);
+    margin-top: 5px;
+
+}
+.cat-image{
+    background: #cf9139;
+    border-radius: 80px;
+     img{
+      margin:12px auto;
+    }
+
+}
+.tab-cam-img-text{
+  position: absolute;
+  top: 5%;
+  width: 20%;
+  text-align: center;
+  font-size: 1.0em;
+  color: #fafafa;
+  text-shadow: 1px 1px 5px black;
+  background: rgba(0, 0, 0, 0.23);
+  padding: 15px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.tab-crop{
+
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    // height:100%;
+    // width:250;
+    background: rgba(207, 145, 57, 0.1);
+    margin-top: 5px;
+
+}
+.tab-crop-img-text{
+  position: absolute;
+  top: 10%;
+  font-size: 1.0em;
+  color: #fafafa;
+  text-shadow: 1px 1px 5px black;
+  background: rgba(0, 0, 0, 0.23);
+  padding: 15px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+#map-canvas {
+    width: 100%;
+    height: 50%;
+}
+.current-loc-btn{
+  position: fixed;
+  bottom: 10%;
+}
+
+.create-tab2{
+  ion-badge {
+    margin-right:5px;
+  }
+}
+
+.map-curr-loc{
+  position: fixed;
+  bottom: 10%;
+}
+.wrap-text{
+  ion-label{
+    white-space: normal;
+  }
+
+}
